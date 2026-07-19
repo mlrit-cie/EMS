@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900&family=Anek+Telugu:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: #fef7f1;
+    font-family: 'Anek Telugu', sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .nav-link {
+    font-family: 'Anek Telugu', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .nav-link:hover { color: #f45b49; }
+  .nav-link.active {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+  }
+
+  .neo-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000;
+    border-radius: 6px;
+    font-family: 'Anek Telugu', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+    box-shadow: 4px 4px 0 #000;
+  }
+  .neo-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #000;
+  }
+  .neo-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 #000;
+  }
+
+  .neo-card {
+    border: 2px solid #000;
+    border-radius: 16px;
+    box-shadow: 6px 6px 0 #000;
+  }
+
+  .input-line {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #000;
+    padding: 8px 0;
+    font-family: 'Anek Telugu', sans-serif;
+    font-size: 1rem;
+    color: rgba(0,0,0,0.5);
+    outline: none;
+  }
+  .input-line:focus {
+    border-bottom-color: #f45b49;
+    color: #000;
+  }
+  .input-line::placeholder { color: rgba(0,0,0,0.35); }
+}
