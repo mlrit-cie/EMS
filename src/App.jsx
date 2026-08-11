@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
+import Landing from './pages/Landing'
 import Home from './pages/Home'
 import Events from './pages/Events'
 import Calendar from './pages/Calendar'
@@ -10,7 +11,8 @@ import Interests from './pages/Interests'
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Landing />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/events" element={<Events />} />
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/activity" element={<Activity />} />

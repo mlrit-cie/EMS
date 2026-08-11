@@ -17,57 +17,73 @@ const achievements = [
 
 export default function Activity() {
   return (
-    <div style={{ backgroundColor: '#fef7f1', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#FFFDF5', minHeight: '100vh' }}>
       <Navbar />
 
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '48px 40px' }}>
 
         <h1 style={{
-          fontFamily: 'Fraunces, serif', fontWeight: 700,
+          fontFamily: 'var(--font-heading)',
+          fontWeight: 800,
           fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-          letterSpacing: '-2px', marginBottom: 8,
+          letterSpacing: '-2px',
+          marginBottom: 8,
+          color: '#1E293B',
         }}>Your Activity</h1>
         <p style={{
-          fontFamily: 'Anek Telugu, sans-serif', fontSize: '1rem',
-          color: 'rgba(0,0,0,0.5)', marginBottom: 48,
+          fontFamily: 'var(--font-body)',
+          fontSize: '1rem',
+          color: '#64748B',
+          marginBottom: 48,
           fontStyle: 'italic',
         }}>Every event you attend adds a new chapter to your story.</p>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'start' }}>
 
           {/* ── LEFT: Registered Passes ── */}
-          <div className="neo-card" style={{ backgroundColor: '#f45b49', padding: '36px 32px' }}>
+          <div style={{
+            backgroundColor: '#8B5CF6',
+            border: '2px solid #1E293B',
+            borderRadius: 24,
+            boxShadow: '8px 8px 0 #E2E8F0',
+            padding: '36px 32px',
+          }}>
             <h2 style={{
-              fontFamily: 'Fraunces, serif', fontWeight: 700,
-              fontSize: '1.8rem', letterSpacing: '-0.5px', color: '#fef7f1',
+              fontFamily: 'var(--font-heading)',
+              fontWeight: 700,
+              fontSize: '1.8rem',
+              letterSpacing: '-0.5px',
+              color: '#FFFFFF',
               marginBottom: 28,
             }}>Registered Passes</h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {passes.map((pass, i) => (
                 <div key={i} style={{
-                  backgroundColor: '#fef7f1',
-                  border: '2px solid #000', borderRadius: 12,
-                  display: 'flex', overflow: 'hidden',
-                  boxShadow: '4px 4px 0 rgba(0,0,0,0.25)',
+                  backgroundColor: '#FFFDF5',
+                  border: '2px solid #1E293B',
+                  borderRadius: 12,
+                  display: 'flex',
+                  overflow: 'hidden',
+                  boxShadow: '4px 4px 0 rgba(0,0,0,0.15)',
                 }}>
                   {/* Left ticket body */}
-                  <div style={{ flex: 1, padding: '18px 20px', borderRight: '2px dashed rgba(0,0,0,0.25)', position: 'relative' }}>
+                  <div style={{ flex: 1, padding: '18px 20px', borderRight: '2px dashed rgba(30,41,59,0.25)', position: 'relative' }}>
                     {/* notch top */}
                     <div style={{
                       position: 'absolute', right: -10, top: -10,
                       width: 20, height: 20, borderRadius: '50%',
-                      backgroundColor: '#f45b49', border: '2px solid #000',
+                      backgroundColor: '#8B5CF6', border: '2px solid #1E293B',
                     }} />
                     {/* notch bottom */}
                     <div style={{
                       position: 'absolute', right: -10, bottom: -10,
                       width: 20, height: 20, borderRadius: '50%',
-                      backgroundColor: '#f45b49', border: '2px solid #000',
+                      backgroundColor: '#8B5CF6', border: '2px solid #1E293B',
                     }} />
-                    <p style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1.1rem', marginBottom: 4 }}>{pass.event}</p>
-                    <p style={{ fontFamily: 'Anek Telugu, sans-serif', fontSize: '0.8rem', color: 'rgba(0,0,0,0.55)' }}>{pass.date}</p>
-                    <p style={{ fontFamily: 'Anek Telugu, sans-serif', fontSize: '0.8rem', color: 'rgba(0,0,0,0.55)' }}>{pass.venue}</p>
+                    <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.1rem', marginBottom: 4, color: '#1E293B' }}>{pass.event}</p>
+                    <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: '#64748B' }}>{pass.date}</p>
+                    <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: '#64748B' }}>{pass.venue}</p>
                   </div>
                   {/* Right stub */}
                   <div style={{
@@ -75,8 +91,8 @@ export default function Activity() {
                     padding: '10px 0',
                   }}>
                     <p style={{
-                      fontFamily: 'Anek Telugu, sans-serif', fontWeight: 600,
-                      fontSize: '0.65rem', color: 'rgba(0,0,0,0.5)',
+                      fontFamily: 'var(--font-body)', fontWeight: 600,
+                      fontSize: '0.65rem', color: '#64748B',
                       writingMode: 'vertical-rl', letterSpacing: '1px',
                     }}>{pass.code}</p>
                   </div>
@@ -86,8 +102,8 @@ export default function Activity() {
 
             <button style={{
               marginTop: 20, background: 'none', border: 'none',
-              cursor: 'pointer', fontFamily: 'Anek Telugu, sans-serif',
-              fontSize: '0.9rem', color: '#fef7f1',
+              cursor: 'pointer', fontFamily: 'var(--font-body)',
+              fontSize: '0.9rem', color: '#FFFFFF',
               textDecoration: 'underline', textUnderlineOffset: 4,
             }}>View More</button>
           </div>
@@ -96,56 +112,65 @@ export default function Activity() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
 
             {/* Achievements card */}
-            <div className="neo-card" style={{ backgroundColor: '#f45b49', padding: '36px 32px' }}>
+            <div style={{
+              backgroundColor: '#F472B6',
+              border: '2px solid #1E293B',
+              borderRadius: 24,
+              boxShadow: '8px 8px 0 #E2E8F0',
+              padding: '36px 32px',
+            }}>
               <h2 style={{
-                fontFamily: 'Fraunces, serif', fontWeight: 700,
-                fontSize: '1.8rem', letterSpacing: '-0.5px', color: '#fef7f1',
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 700,
+                fontSize: '1.8rem',
+                letterSpacing: '-0.5px',
+                color: '#FFFFFF',
                 marginBottom: 24,
               }}>Achievements</h2>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {achievements.map((a, i) => (
                   <div key={i} style={{
-                    backgroundColor: '#fef7f1',
-                    border: '2px solid #000', borderRadius: 12,
+                    backgroundColor: '#FFFDF5',
+                    border: '2px solid #1E293B', borderRadius: 12,
                     padding: '16px 20px',
                     display: 'flex', alignItems: 'center', gap: 16,
-                    boxShadow: '4px 4px 0 rgba(0,0,0,0.2)',
+                    boxShadow: '4px 4px 0 rgba(0,0,0,0.15)',
                   }}>
                     <div style={{
                       width: 52, height: 52, borderRadius: 10,
-                      backgroundColor: '#f45b49', border: '2px solid #000',
+                      backgroundColor: '#FBBF24', border: '2px solid #1E293B',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontSize: '1.5rem', flexShrink: 0,
                     }}>{a.icon}</div>
                     <div>
-                      <p style={{ fontFamily: 'Fraunces, serif', fontWeight: 700, fontSize: '1rem' }}>{a.title}</p>
-                      <p style={{ fontFamily: 'Anek Telugu, sans-serif', fontSize: '0.8rem', color: 'rgba(0,0,0,0.5)' }}>{a.desc}</p>
+                      <p style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1rem', color: '#1E293B' }}>{a.title}</p>
+                      <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: '#64748B' }}>{a.desc}</p>
                     </div>
                   </div>
                 ))}
                 {/* Locked slots */}
                 {[0, 1].map(i => (
                   <div key={i} style={{
-                    border: '2px dashed rgba(0,0,0,0.25)', borderRadius: 12,
+                    border: '2px dashed rgba(30,41,59,0.25)', borderRadius: 12,
                     padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16,
-                    opacity: 0.45,
+                    opacity: 0.5,
                   }}>
                     <div style={{
                       width: 52, height: 52, borderRadius: 10,
-                      border: '2px dashed rgba(0,0,0,0.3)',
+                      border: '2px dashed rgba(30,41,59,0.3)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '1.3rem', flexShrink: 0,
+                      fontSize: '1.3rem', flexShrink: 0, color: '#fff',
                     }}>?</div>
-                    <p style={{ fontFamily: 'Anek Telugu, sans-serif', fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>Locked achievement</p>
+                    <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)' }}>Locked achievement</p>
                   </div>
                 ))}
               </div>
 
               <button style={{
                 marginTop: 16, background: 'none', border: 'none',
-                cursor: 'pointer', fontFamily: 'Anek Telugu, sans-serif',
-                fontSize: '0.9rem', color: '#fef7f1',
+                cursor: 'pointer', fontFamily: 'var(--font-body)',
+                fontSize: '0.9rem', color: '#FFFFFF',
                 textDecoration: 'underline', textUnderlineOffset: 4,
               }}>View More</button>
             </div>
@@ -153,22 +178,22 @@ export default function Activity() {
             {/* CTA: View Events */}
             <Link to="/events" style={{ textDecoration: 'none' }}>
               <div style={{
-                border: '2px solid #000', borderRadius: 16,
+                border: '2px solid #1E293B', borderRadius: 16,
                 overflow: 'hidden', cursor: 'pointer',
-                boxShadow: '6px 6px 0 #000',
-                transition: 'transform 0.1s, box-shadow 0.1s',
+                boxShadow: '6px 6px 0 #1E293B',
+                transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
               }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translate(3px,3px)'; e.currentTarget.style.boxShadow = '3px 3px 0 #000' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '6px 6px 0 #000' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translate(-2px,-2px)'; e.currentTarget.style.boxShadow = '8px 8px 0 #1E293B' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '6px 6px 0 #1E293B' }}
               >
-                <div style={{ backgroundColor: '#000', padding: '24px 32px' }}>
+                <div style={{ backgroundColor: '#1E293B', padding: '24px 32px' }}>
                   <p style={{
-                    fontFamily: 'Anek Telugu, sans-serif', fontWeight: 600,
+                    fontFamily: 'var(--font-body)', fontWeight: 600,
                     fontSize: '1.2rem', color: '#fff',
                   }}>View Events Calendar →</p>
                 </div>
-                <div style={{ backgroundColor: '#f45b49', padding: '12px 32px' }}>
-                  <p style={{ fontFamily: 'Anek Telugu, sans-serif', fontSize: '0.85rem', color: '#fff', opacity: 0.85 }}>Discover upcoming events at MLRIT</p>
+                <div style={{ backgroundColor: '#FBBF24', padding: '12px 32px' }}>
+                  <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.85rem', color: '#1E293B', fontWeight: 500 }}>Discover upcoming events at MLRIT</p>
                 </div>
               </div>
             </Link>

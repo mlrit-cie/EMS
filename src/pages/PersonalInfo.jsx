@@ -70,7 +70,7 @@ export default function PersonalInfo() {
         <div style={{ position:'absolute', left:306, top:295, width:930, height:1062, backgroundColor:'#fff', border:'3px solid #000', borderRadius:4 }}>
 
           {/* Profile pic placeholder */}
-          <div style={{ position:'absolute', left:370, top:108, width:165, height:172, borderRadius:'50%', backgroundColor:'#f1a242', border:'2px solid #000', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+          <div style={{ position:'absolute', left:370, top:108, width:165, height:172, borderRadius:'50%', backgroundColor:'#FBBF24', border:'2px solid #1E293B', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
             <svg width="60" height="60" viewBox="0 0 24 24" fill="#000">
               <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
             </svg>
@@ -80,7 +80,7 @@ export default function PersonalInfo() {
           <div style={{ position:'absolute', left:150, top:391, width:604 }}>
             {fields.map(({ key, label }, i) => (
               <div key={key} style={{ marginBottom: i < fields.length - 1 ? 84 : 0 }}>
-                <label style={{ fontFamily:'Anek Telugu, sans-serif', fontSize:14, color:'rgba(0,0,0,0.5)' }}>{label}</label>
+                <label style={{ fontFamily:'var(--font-body)', fontSize:14, color:'#64748B' }}>{label}</label>
                 <input
                   type="text"
                   placeholder={label}
@@ -88,9 +88,9 @@ export default function PersonalInfo() {
                   onChange={e => setForm({ ...form, [key]: e.target.value })}
                   style={{
                     display:'block', width:'100%', background:'transparent',
-                    border:'none', borderBottom:'2px solid black', paddingBottom:8, marginTop:4,
-                    fontFamily:'Anek Telugu, sans-serif', fontSize:40,
-                    letterSpacing:'-2px', color:'rgba(0,0,0,0.49)', outline:'none'
+                    border:'none', borderBottom:'2px solid #1E293B', paddingBottom:8, marginTop:4,
+                    fontFamily:'var(--font-body)', fontSize:40,
+                    letterSpacing:'-2px', color:'rgba(30,41,59,0.6)', outline:'none'
                   }}
                 />
               </div>
@@ -102,8 +102,9 @@ export default function PersonalInfo() {
             onClick={() => navigate('/signup/interests')}
             style={{
               position:'absolute', left:375, top:1096, width:181, height:38,
-              backgroundColor:'#f1a242', border:'1px solid #000', borderRadius:4,
-              fontFamily:'Anek Telugu, sans-serif', fontSize:29, cursor:'pointer',
+              backgroundColor:'#FBBF24', border:'2px solid #1E293B', borderRadius:9999,
+              fontFamily:'var(--font-body)', fontWeight:700, fontSize:29, cursor:'pointer',
+              boxShadow:'4px 4px 0 #1E293B', transition:'transform 0.2s, box-shadow 0.2s',
               display:'flex', alignItems:'center', justifyContent:'center'
             }}
           >Save</button>
@@ -112,8 +113,8 @@ export default function PersonalInfo() {
         {/* Subtitle outside card */}
         <p style={{
           position:'absolute', left:476, top:586,
-          fontFamily:'Anek Telugu, sans-serif', fontWeight:400, fontSize:36,
-          color:'#000', width:590
+          fontFamily:'var(--font-heading)', fontWeight:700, fontSize:36,
+          color:'#1E293B', width:590
         }}>We want to know you!</p>
 
       </div>

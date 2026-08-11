@@ -2,75 +2,234 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900&family=Anek+Telugu:wght@300;400;500;600;700&display=swap');
+/* ──────────────────────────────────────────────────────────────────────────
+   Playful Geometric Design System — Font & Token Variables
+   ────────────────────────────────────────────────────────────────────────── */
 
 @layer base {
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    /* ─── Font tokens (swap fonts here project-wide) ─── */
+    --font-heading: "Outfit", system-ui, sans-serif;
+    --font-body:    "Plus Jakarta Sans", system-ui, sans-serif;
+
+    /* ─── Color tokens (Light Mode) ─── */
+    --background:       #FFFDF5;   /* Warm Cream */
+    --foreground:       #1E293B;   /* Slate 800 */
+    --muted:            #F1F5F9;   /* Slate 100 */
+    --muted-foreground: #64748B;   /* Slate 500 */
+    --accent:           #8B5CF6;   /* Vivid Violet */
+    --accent-foreground:#FFFFFF;
+    --secondary:        #F472B6;   /* Hot Pink */
+    --tertiary:         #FBBF24;   /* Amber/Yellow */
+    --quaternary:       #34D399;   /* Emerald/Mint */
+    --border:           #E2E8F0;
+    --card:             #FFFFFF;
+    --ring:             #8B5CF6;
+
+    /* ─── Radius tokens ─── */
+    --radius-sm:   8px;
+    --radius-md:   16px;
+    --radius-lg:   24px;
+    --radius-full: 9999px;
+
+    /* ─── Shadow tokens (hard, no blur) ─── */
+    --shadow-pop:        4px 4px 0px 0px var(--foreground);
+    --shadow-pop-hover:  6px 6px 0px 0px var(--foreground);
+    --shadow-pop-active: 2px 2px 0px 0px var(--foreground);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
   body {
-    background-color: #fef7f1;
-    font-family: 'Anek Telugu', sans-serif;
+    background-color: var(--background);
+    font-family: var(--font-body);
+    color: var(--foreground);
     overflow-x: hidden;
+  }
+
+  /* ─── Respect prefers-reduced-motion ─── */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
+/* ──────────────────────────────────────────────────────────────────────────
+   Component Styles — Playful Geometric
+   ────────────────────────────────────────────────────────────────────────── */
+
 @layer components {
+
+  /* ─── Nav Links ────────────────────────────────────────────────────────── */
   .nav-link {
-    font-family: 'Anek Telugu', sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 500;
-    color: #000;
+    color: var(--foreground);
     text-decoration: none;
-    transition: color 0.15s;
+    transition: color 0.2s ease;
+    position: relative;
+    padding-bottom: 4px;
   }
-  .nav-link:hover { color: #f45b49; }
+  .nav-link:hover {
+    color: var(--accent);
+  }
   .nav-link.active {
-    text-decoration: underline;
-    text-underline-offset: 6px;
-    text-decoration-thickness: 2px;
+    color: var(--accent);
+    border-bottom: 3px solid var(--accent);
   }
 
-  .neo-btn {
+  /* ─── Primary "Candy Button" ──────────────────────────────────────────── */
+  .candy-btn {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #000;
-    border-radius: 6px;
-    font-family: 'Anek Telugu', sans-serif;
-    font-weight: 600;
+    gap: 8px;
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+    border: 2px solid var(--foreground);
+    border-radius: var(--radius-full);
+    padding: 12px 28px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1rem;
     cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.1s;
-    box-shadow: 4px 4px 0 #000;
+    box-shadow: var(--shadow-pop);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-decoration: none;
   }
-  .neo-btn:hover {
+  .candy-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-pop-hover);
+  }
+  .candy-btn:active {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 #000;
-  }
-  .neo-btn:active {
-    transform: translate(4px, 4px);
-    box-shadow: 0 0 0 #000;
+    box-shadow: var(--shadow-pop-active);
   }
 
-  .neo-card {
-    border: 2px solid #000;
-    border-radius: 16px;
-    box-shadow: 6px 6px 0 #000;
+  /* ─── Secondary Button (transparent, fills yellow on hover) ───────────── */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: var(--foreground);
+    border: 2px solid var(--foreground);
+    border-radius: var(--radius-full);
+    padding: 10px 24px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    background-color: var(--tertiary);
+    color: var(--foreground);
   }
 
+  /* ─── "Sticker" Card ───────────────────────────────────────────────────── */
+  .sticker-card {
+    background-color: var(--card);
+    border: 2px solid var(--foreground);
+    border-radius: var(--radius-lg);
+    box-shadow: 6px 6px 0px 0px var(--border);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+  }
+  .sticker-card:hover {
+    transform: rotate(-1deg) scale(1.02);
+    box-shadow: 8px 8px 0px 0px var(--border);
+  }
+
+  /* ─── Sticker Card Variant (with accent shadow) ───────────────────────── */
+  .sticker-card--accent {
+    box-shadow: 6px 6px 0px 0px var(--secondary);
+  }
+  .sticker-card--accent:hover {
+    box-shadow: 8px 8px 0px 0px var(--secondary);
+  }
+
+  /* ─── Input Fields ─────────────────────────────────────────────────────── */
+  .input-field {
+    width: 100%;
+    background-color: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--foreground);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .input-field:focus {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-pop);
+  }
+  .input-field::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  /* ─── Legacy line input (for PersonalInfo/Interests pages) ───────────────*/
   .input-line {
     width: 100%;
     background: transparent;
     border: none;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid var(--foreground);
     padding: 8px 0;
-    font-family: 'Anek Telugu', sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
-    color: rgba(0,0,0,0.5);
+    color: var(--muted-foreground);
     outline: none;
+    transition: border-color 0.2s ease, color 0.2s ease;
   }
   .input-line:focus {
-    border-bottom-color: #f45b49;
-    color: #000;
+    border-bottom-color: var(--accent);
+    color: var(--foreground);
   }
-  .input-line::placeholder { color: rgba(0,0,0,0.35); }
+  .input-line::placeholder {
+    color: var(--muted-foreground);
+    opacity: 0.6;
+  }
+
+  /* ─── Tag Pills ────────────────────────────────────────────────────────── */
+  .tag-pill {
+    display: inline-block;
+    border: 2px solid var(--foreground);
+    border-radius: var(--radius-full);
+    padding: 4px 14px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── Icon Circle ──────────────────────────────────────────────────────── */
+  .icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--foreground);
+    border-radius: 50%;
+    box-shadow: var(--shadow-pop);
+    transition: transform 0.2s ease;
+  }
+  .icon-circle:hover {
+    animation: wiggle 0.5s ease-in-out;
+  }
 }

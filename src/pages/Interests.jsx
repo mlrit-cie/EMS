@@ -92,7 +92,7 @@ export default function Interests() {
         <div style={{ position:'absolute', left:306, top:295, width:930, height:1062, backgroundColor:'#fff', border:'3px solid #000', borderRadius:4 }}>
 
           {/* Profile pic */}
-          <div style={{ position:'absolute', left:370, top:108, width:165, height:172, borderRadius:'50%', backgroundColor:'#f1a242', border:'2px solid #000', display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <div style={{ position:'absolute', left:370, top:108, width:165, height:172, borderRadius:'50%', backgroundColor:'#FBBF24', border:'2px solid #1E293B', display:'flex', alignItems:'center', justifyContent:'center' }}>
             <svg width="60" height="60" viewBox="0 0 24 24" fill="#000">
               <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
             </svg>
@@ -112,11 +112,11 @@ export default function Interests() {
                   top: pos.top,
                   width: 150,
                   height: 53,
-                  border: '4px solid black',
+                  border: '4px solid #1E293B',
                   borderRadius: 8,
-                  backgroundColor: isSelected ? '#f45b49' : '#fef7f1',
-                  color: isSelected ? '#fff' : '#000',
-                  fontFamily: 'Anek Telugu, sans-serif',
+                  backgroundColor: isSelected ? '#8B5CF6' : '#FFFDF5',
+                  color: isSelected ? '#fff' : '#1E293B',
+                  fontFamily: 'var(--font-body)',
                   fontSize: 22,
                   fontWeight: 500,
                   cursor: 'pointer',
@@ -134,8 +134,9 @@ export default function Interests() {
             onClick={() => navigate('/')}
             style={{
               position:'absolute', left:375, top:1043, width:181, height:38,
-              backgroundColor:'#f1a242', border:'1px solid #000', borderRadius:4,
-              fontFamily:'Anek Telugu, sans-serif', fontSize:29, cursor:'pointer',
+              backgroundColor:'#FBBF24', border:'2px solid #1E293B', borderRadius:9999,
+              fontFamily:'var(--font-body)', fontWeight:700, fontSize:29, cursor:'pointer',
+              boxShadow:'4px 4px 0 #1E293B', transition:'transform 0.2s, box-shadow 0.2s',
               display:'flex', alignItems:'center', justifyContent:'center'
             }}
           >{selected.length === 0 ? 'Skip' : 'Continue →'}</button>
@@ -144,20 +145,20 @@ export default function Interests() {
         {/* Text outside card */}
         <p style={{
           position:'absolute', left:440, top:591,
-          fontFamily:'Anek Telugu, sans-serif', fontWeight:400, fontSize:36,
-          color:'#000', width:663
+          fontFamily:'var(--font-heading)', fontWeight:700, fontSize:36,
+          color:'#1E293B', width:663
         }}>What are your Top 3 interests</p>
         <p style={{
           position:'absolute', left:550, top:643,
-          fontFamily:'Anek Telugu, sans-serif', fontWeight:400, fontSize:24,
-          color:'rgba(0,0,0,0.5)', width:442
+          fontFamily:'var(--font-body)', fontWeight:400, fontSize:24,
+          color:'#64748B', width:442
         }}>We use this info to suggest personalised events</p>
 
         {/* Selected count */}
         <p style={{
           position:'absolute', left:550, top:700,
-          fontFamily:'Anek Telugu, sans-serif', fontSize:22,
-          color:'rgba(0,0,0,0.4)'
+          fontFamily:'var(--font-body)', fontSize:22,
+          color:'#64748B'
         }}>{selected.length}/3 selected</p>
 
       </div>
