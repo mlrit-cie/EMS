@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EMS — Event Management System
 
-## Getting Started
+Next.js 15 + TypeScript + Supabase + NextAuth.js platform for managing club
+events with IIC-hosted and self-hosted event flows.
 
-First, run the development server:
+## Quick start
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```powershell
+cp .env.example .env.local   # fill in your keys (see docs/architecture.md)
+npm install
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Documentation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Doc                                                              | Description                                                                           |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| [docs/architecture.md](docs/architecture.md)                     | Tech stack, directory layout, auth & auth-z model, API routes, env vars, dev commands |
+| [docs/club-dashboard.md](docs/club-dashboard.md)                 | Club dashboard structure, Calendar tab, DB schema for `club_event_calendar`           |
+| [docs/supabase-storage-setup.md](docs/supabase-storage-setup.md) | Storage buckets, RLS policies, DB migrations, troubleshooting                         |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Authentication
 
-## Learn More
+EMS uses [NextAuth.js v4](https://next-auth.js.org/) with a `CredentialsProvider` configured with a **domain-trust allowlist**:
 
-To learn more about Next.js, take a look at the following resources:
+- Email addresses ending in `@gmail.com` or `@mlrit.ac.in` are permitted to authenticate.
+- User IDs are deterministically generated UUIDv5 values derived from the user's email address (`lib/utils/id.ts`), ensuring persistent foreign key relationships in Supabase (`public.users`, `public.clubs`).
+- Passwords are not verified against a stored hash under the current domain-trust model; authentication upserts the user record into Supabase via the admin client.
+- For architectural rationale, security details, and proposed migration options (e.g., implementing full bcrypt verification or Google OAuth), see [docs/auth-decision-needed.md](docs/auth-decision-needed.md).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build, lint & test
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```powershell
+npm run build    # production build (Turbopack)
+npm run lint     # ESLint — must be clean before committing
+npm test         # Unit tests (Vitest)
+```
 
-## Deploy on Vercel
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on code style, naming conventions, and pull request verification.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [docs/architecture.md § Environment Variables](docs/architecture.md#environment-variables)
+and [.env.example](.env.example) for the full list. The app throws a clear startup error for any missing required
+variable — there are no silent fallbacks.

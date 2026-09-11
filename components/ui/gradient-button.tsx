@@ -2,8 +2,7 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 
-export interface GradientButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface GradientButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
   innerClassName?: string;
 }
@@ -14,7 +13,7 @@ export interface GradientButtonProps
  * A reusable gradient-border button that mirrors the styling used in TopBar.
  * Usage examples:
  *
- * <GradientButton onClick={() => signIn("google", { callbackUrl: "/home" })}>
+ * <GradientButton onClick={handleClick}>
  *   <span className="flex items-center">
  *     Login
  *     <MoveRight className="ml-1 h-4 w-4 transition-transform duration-200 ease-out group-hover:translate-x-2" />

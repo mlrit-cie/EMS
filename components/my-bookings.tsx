@@ -1,10 +1,10 @@
-// app/components/tickets/MyBookings.tsx
 "use client";
+// app/components/tickets/MyBookings.tsx
 
 import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { TicketCard } from "./tickets/TicketCard"; // ← your card with the "View Ticket" button
+import { TicketCard } from "./tickets/ticket-card"; // ← your card with the "View Ticket" button
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 
@@ -15,6 +15,30 @@ type TicketItem = {
   dateRange: string;
   timeLabel: string;
 };
+
+// Hoisted outside MyBookings so React doesn't recreate it on every render.
+function TicketDesign({ selected }: { selected: TicketItem | null }) {
+  if (!selected) return null;
+  return (
+    <div className="w-full flex justify-center">
+      <div className="relative w-[620px] max-w-[92vw]">
+        <Image
+          src="/elements/ticket.svg"
+          alt="Ticket"
+          width={1200}
+          height={600}
+          priority
+          className="w-full h-auto block"
+        />
+        <div className="pointer-events-none absolute inset-0">
+          <p className="absolute right-[9%] top-1/2 -translate-y-1/2 text-[18px] tracking-wide text-black">
+            ID: {selected.ticketNo}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function MyBookings() {
   const [open, setOpen] = useState(false);
@@ -75,33 +99,6 @@ export default function MyBookings() {
     setOpen(true);
   };
 
-  const TicketDesign = () => {
-    if (!selected) return null;
-    return (
-      <div className="w-full flex justify-center">
-        {/* Wrapper that matches the uploaded ticket aspect/size and isolates clicks */}
-        <div className="relative w-[620px] max-w-[92vw]">
-          {/* Ticket SVG (from /public/elements/ticket.svg) */}
-          <Image
-            src="/elements/ticket.svg"
-            alt="Ticket"
-            width={1200}
-            height={600}
-            priority
-            className="w-full h-auto block"
-          />
-
-          {/* Overlay: ID text at right-center (like your screenshot) */}
-          <div className="pointer-events-none absolute inset-0">
-            <p className="absolute right-[9%] top-1/2 -translate-y-1/2 text-[18px] tracking-wide text-black">
-              ID: {selected.ticketNo}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <>
       <div className="container mx-auto px-4 py-8">
@@ -111,7 +108,7 @@ export default function MyBookings() {
           {tickets.map((t) => (
             <TicketCard
               key={t.id}
-              tier={t.tier as any}
+              tier={t.tier}
               ticketNo={t.ticketNo}
               dateRange={t.dateRange}
               timeLabel={t.timeLabel}
@@ -130,14 +127,14 @@ export default function MyBookings() {
             className="p-0 bg-transparent border-none shadow-none max-w-[680px]"
             showCloseButton={false}
           >
-            <TicketDesign />
+            <TicketDesign selected={selected} />
           </DialogContent>
         </Dialog>
       ) : (
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerContent className="border-none">
             <div className="py-6">
-              <TicketDesign />
+              <TicketDesign selected={selected} />
             </div>
           </DrawerContent>
         </Drawer>

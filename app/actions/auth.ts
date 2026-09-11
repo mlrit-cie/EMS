@@ -1,4 +1,5 @@
 "use server";
+import logger from "@/lib/logger";
 
 import { createClient } from "@/lib/supabase/server";
 
@@ -10,21 +11,25 @@ type UserProfile = {
 };
 
 export async function createOrUpdateUser(profile: UserProfile) {
-  console.log("[Supabase] createOrUpdateUser called with:", profile);
-
+  // NOTE: do not log the profile object — it contains PII (email, name, avatar).
   try {
     const supabase = await createClient();
 
+    // Select only the columns we actually need to decide insert vs. update.
+    // Avoid SELECT * to prevent accidentally reading future sensitive columns
+    // (e.g. password_hash) into server memory unnecessarily.
     const { data: existingUser, error: fetchError } = await supabase
       .from("users")
-      .select("*")
+      .select("id")
       .eq("id", profile.id)
       .maybeSingle();
 
     if (fetchError) {
-      console.error("[Supabase] fetchError:", fetchError);
-    } else {
-      console.log("[Supabase] existingUser:", existingUser);
+      logger.error(
+        "[Supabase] createOrUpdateUser: fetch error",
+        fetchError.message
+      );
+      return { success: false, error: fetchError.message };
     }
 
     const userData = {
@@ -36,26 +41,34 @@ export async function createOrUpdateUser(profile: UserProfile) {
     };
 
     if (!existingUser) {
-      console.log("[Supabase] Inserting new user:", userData);
       const { error: insertError } = await supabase
         .from("users")
         .insert([{ ...userData, created_at: new Date().toISOString() }]);
       if (insertError) {
-        console.error("[Supabase] insertError:", insertError);
+        logger.error(
+          "[Supabase] createOrUpdateUser: insert error",
+          insertError.message
+        );
+        return { success: false, error: insertError.message };
       }
     } else {
-      console.log("[Supabase] Updating existing user:", userData);
       const { error: updateError } = await supabase
         .from("users")
         .update(userData)
         .eq("id", profile.id);
       if (updateError) {
-        console.error("[Supabase] updateError:", updateError);
+        logger.error(
+          "[Supabase] createOrUpdateUser: update error",
+          updateError.message
+        );
+        return { success: false, error: updateError.message };
       }
     }
-  } catch (err) {
-    console.error("[Supabase] createOrUpdateUser exception:", err);
-  }
 
-  return { success: true };
+    return { success: true };
+  } catch (err) {
+    const error = err instanceof Error ? err.message : "Unexpected exception";
+    logger.error("[Supabase] createOrUpdateUser: unexpected exception", error);
+    return { success: false, error };
+  }
 }

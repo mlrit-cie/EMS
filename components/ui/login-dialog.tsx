@@ -1,6 +1,8 @@
 "use client";
+import logger from "@/lib/logger";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { signIn } from "next-auth/react";
 import {
   Dialog,
@@ -24,6 +26,7 @@ export function LoginDialog({ children, triggerClassName }: LoginDialogProps) {
   const handleCredentialsSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
+
     setIsLoading(true);
     setError(null);
     try {
@@ -34,7 +37,7 @@ export function LoginDialog({ children, triggerClassName }: LoginDialogProps) {
         callbackUrl: "/home",
       });
       if (res?.error) {
-        console.error("[LoginDialog] signIn error:", res.error);
+        logger.error("[LoginDialog] signIn error:", res.error);
         setError(
           res.error === "CredentialsSignin"
             ? "Invalid email or password."
@@ -45,7 +48,7 @@ export function LoginDialog({ children, triggerClassName }: LoginDialogProps) {
         window.location.replace("/home");
       }
     } catch (err) {
-      console.error("[LoginDialog] exception:", err);
+      logger.error("[LoginDialog] exception:", err);
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
@@ -54,7 +57,9 @@ export function LoginDialog({ children, triggerClassName }: LoginDialogProps) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild className={triggerClassName}>{children}</DialogTrigger>
+      <DialogTrigger asChild className={triggerClassName}>
+        {children}
+      </DialogTrigger>
       <DialogContent
         className="max-w-3xl w-full p-0 overflow-hidden border-0 bg-transparent shadow-none"
         showCloseButton={false}
@@ -65,14 +70,18 @@ export function LoginDialog({ children, triggerClassName }: LoginDialogProps) {
 
           {/* Left Side - Logos stacked vertically */}
           <div className="flex-1 p-12 flex flex-col justify-center items-center gap-8 relative z-10">
-            <img
+            <Image
               src="/logos/mlrit.svg"
               alt="MLRIT Logo"
+              width={160}
+              height={80}
               className="h-20 w-auto object-contain"
             />
-            <img
+            <Image
               src="/logos/iic.svg"
               alt="Institution's Innovation Council Logo"
+              width={160}
+              height={96}
               className="h-24 w-auto object-contain"
             />
           </div>
@@ -119,7 +128,8 @@ export function LoginDialog({ children, triggerClassName }: LoginDialogProps) {
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
+                    placeholder="Leave blank if you don't have one"
+                    autoComplete="current-password"
                     className="w-full px-4 py-2.5 rounded-xl border dark:border-white/10 border-black/10 dark:bg-white/5 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
                   />
                 </div>

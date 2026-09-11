@@ -1,5 +1,5 @@
-// app/components/Footer.tsx (or wherever you keep components)
 "use client";
+// app/components/Footer.tsx (or wherever you keep components)
 
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,6 @@ import {
   Twitter,
   Linkedin,
   Youtube,
-  Globe,
   Mail,
   Phone,
 } from "lucide-react";

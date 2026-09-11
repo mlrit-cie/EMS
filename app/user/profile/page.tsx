@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import logger from "@/lib/logger";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { supabase } from "@/lib/supabase/browserClient";
-import ProfilePage from "./ProfilePage"; // 👈 move your full UI here
+import ProfilePage from "./profile-page"; // 👈 move your full UI here
 
 export default function Profile() {
   const { data: session, status } = useSession();
@@ -25,7 +26,7 @@ export default function Profile() {
         .single();
 
       if (error) {
-        console.error("Error fetching role:", error);
+        logger.error("Error fetching role:", error);
         setLoading(false);
         return;
       }
@@ -34,6 +35,8 @@ export default function Profile() {
         router.replace("/club"); // 🚀 instant redirect
       } else if (data?.role === "admin") {
         router.replace("/admin");
+      } else if (data?.role === "faculty") {
+        router.replace("/faculty");
       } else {
         setLoading(false); // stay here, show ProfilePage
       }
@@ -50,5 +53,9 @@ export default function Profile() {
     );
   }
 
-  return <ProfilePage />;
+  return (
+    <Suspense fallback={null}>
+      <ProfilePage />
+    </Suspense>
+  );
 }
