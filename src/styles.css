@@ -1,4 +1,4 @@
-﻿@import "tailwindcss" source(none);
+@import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
 
@@ -48,6 +48,7 @@
     filter: blur(16px);
     transform: scale(1.07);
   }
+
   to {
     filter: blur(0);
     transform: scale(1);
@@ -59,6 +60,7 @@
     opacity: 0;
     transform: translateY(-12px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -70,6 +72,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -81,6 +84,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -95,39 +99,48 @@
   color-scheme: light;
 
   /* Core semantic tokens */
-  --background:           #E9ECEF;   /* Off White */
-  --foreground:           #212529;   /* Charcoal Black */
+  --background: #E9ECEF;
+  /* Off White */
+  --foreground: #212529;
+  /* Charcoal Black */
 
-  --primary:              #8338EC;   /* Electric Purple */
-  --primary-foreground:   #E9ECEF;   /* Off White */
+  --primary: #8338EC;
+  /* Electric Purple */
+  --primary-foreground: #E9ECEF;
+  /* Off White */
 
-  --secondary:            #212529;   /* Charcoal Black */
-  --secondary-foreground: #E9ECEF;   /* Off White */
+  --secondary: #212529;
+  /* Charcoal Black */
+  --secondary-foreground: #E9ECEF;
+  /* Off White */
 
-  --accent:               #FB5607;   /* Volcanic Orange */
-  --accent-foreground:    #E9ECEF;   /* Off White */
+  --accent: #FB5607;
+  /* Volcanic Orange */
+  --accent-foreground: #E9ECEF;
+  /* Off White */
 
-  --muted:                #d4d7db;
-  --muted-foreground:     #5a5f66;
+  --muted: #d4d7db;
+  --muted-foreground: #5a5f66;
 
-  --card:                 #ffffff;
-  --card-foreground:      #212529;
+  --card: #ffffff;
+  --card-foreground: #212529;
 
-  --popover:              #ffffff;
-  --popover-foreground:   #212529;
+  --popover: #ffffff;
+  --popover-foreground: #212529;
 
-  --destructive:          #dc2626;
+  --destructive: #dc2626;
   --destructive-foreground: #E9ECEF;
 
-  --border:               rgb(33 37 41 / 15%);
-  --input:                rgb(33 37 41 / 20%);
-  --ring:                 #8338EC;
+  --border: rgb(33 37 41 / 15%);
+  --input: rgb(33 37 41 / 20%);
+  --ring: #8338EC;
 
   /* Palette direct references (handy for one-off use) */
-  --clr-orange:   #FB5607;
-  --clr-purple:   #8338EC;
-  --clr-black:    #212529;
-  --clr-white:    #E9ECEF;
+  --clr-orange: #FB5607;
+  --clr-purple: #8338EC;
+  --clr-black: #212529;
+  --clr-white: #E9ECEF;
+  --clr-cream: #FAF7EE;
 }
 
 /* --- Global Reset ----------------------------------------------------------- */
@@ -238,7 +251,7 @@ a {
   transition: border-color 0.3s ease;
 }
 
-.site-brand-mark span + span {
+.site-brand-mark span+span {
   margin-left: -0.55rem;
 }
 
@@ -368,11 +381,9 @@ a {
 .site-menu-video-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(33, 37, 41, 0.92) 40%,
-    rgba(131, 56, 236, 0.25) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(33, 37, 41, 0.92) 40%,
+      rgba(131, 56, 236, 0.25) 100%);
 }
 
 /* --- Inverse (dark hero) adjustments --------------------------------------- */
@@ -507,21 +518,27 @@ select {
 .club-card:hover .club-card-bar {
   transform: scaleX(1) !important;
 }
+
 .club-card:hover .club-card-arrow {
   opacity: 1 !important;
   transform: translate(0, 0) !important;
 }
+
 .club-card-bar {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 2px;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
 }
+
 .club-card-arrow {
   position: absolute;
-  top: 1.5rem; right: 1.5rem;
+  top: 1.5rem;
+  right: 1.5rem;
   opacity: 0;
   transform: translate(-4px, 4px);
   transition: opacity 0.2s ease, transform 0.2s ease;
@@ -594,7 +611,7 @@ select {
   border-radius: 50%;
 }
 
-.event-mark span + span {
+.event-mark span+span {
   margin-left: -0.8rem;
 }
 
@@ -759,8 +776,15 @@ select {
 
 /* Scroll-reveal animation for event rows */
 @keyframes event-row-slide-in {
-  from { opacity: 0; transform: translateY(40px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)    scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .event-row-reveal {
@@ -903,7 +927,7 @@ select {
   text-transform: uppercase;
 }
 
-.event-community-copy > p:last-child {
+.event-community-copy>p:last-child {
   max-width: 24rem;
   margin: 0;
   font-size: 1.1rem;
@@ -930,7 +954,7 @@ select {
   padding-top: 5rem;
 }
 
-.event-footer > .event-panel {
+.event-footer>.event-panel {
   min-height: 22rem;
   padding: clamp(1.5rem, 4vw, 3.5rem);
   display: flex;
@@ -1013,7 +1037,7 @@ select {
   margin-block: 1.5rem;
 }
 
-.event-detail-hero-copy > p:last-child {
+.event-detail-hero-copy>p:last-child {
   max-width: 27rem;
   margin: 0;
   font-size: 1.1rem;
@@ -1107,7 +1131,7 @@ select {
   text-transform: uppercase;
 }
 
-.event-detail-brief > p:last-child {
+.event-detail-brief>p:last-child {
   max-width: 22rem;
   margin: 0;
   font-size: 1rem;
@@ -1121,7 +1145,7 @@ select {
   gap: 2rem;
 }
 
-.event-detail-facts > div {
+.event-detail-facts>div {
   display: grid;
   align-content: start;
   gap: 0.8rem;
@@ -1164,7 +1188,7 @@ select {
   object-fit: cover;
 }
 
-.event-related-card > div {
+.event-related-card>div {
   position: relative;
   padding: 1.5rem;
 }
@@ -1197,7 +1221,7 @@ select {
   min-width: 0;
 }
 
-.event-schedule-pair > .space-page {
+.event-schedule-pair>.space-page {
   display: block;
   width: 100%;
   min-height: unset;
@@ -1247,13 +1271,14 @@ select {
     font-size: clamp(1.1rem, 4.2vw, 2rem);
   }
 
-  .event-schedule-pair > .space-page {
+  .event-schedule-pair>.space-page {
     min-height: unset;
     margin-top: 1rem;
   }
 }
 
 @media (max-width: 640px) {
+
   .event-detail-hero,
   .event-detail-info {
     grid-template-columns: 1fr;
@@ -1302,8 +1327,7 @@ select {
     grid-template-columns: 1fr;
   }
 
-  .event-footer > .event-panel {
+  .event-footer>.event-panel {
     min-height: 18rem;
   }
 }
-
