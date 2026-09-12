@@ -185,7 +185,7 @@ function parseColor(input: string | undefined, fb: RGBA): RGBA {
   if (str.charAt(0) === "#") {
     let hex = str.slice(1)
     if (hex.length === 3 || hex.length === 4) {
-      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2] + (hex.length === 4 ? hex[3] + hex[3] : "")
+      hex = hex.split("").map((c) => c + c).join("")
     }
     if (hex.length >= 6) {
       const r = parseInt(hex.slice(0, 2), 16)
@@ -198,11 +198,15 @@ function parseColor(input: string | undefined, fb: RGBA): RGBA {
   }
   const m = str.match(/[\d.]+/g)
   if (m && m.length >= 3) {
+    const r = parseFloat(m[0] ?? "0")
+    const g = parseFloat(m[1] ?? "0")
+    const b = parseFloat(m[2] ?? "0")
+    const a = m.length >= 4 ? parseFloat(m[3] ?? "1") : 1
     return [
-      Math.min(255, parseFloat(m[0])) / 255,
-      Math.min(255, parseFloat(m[1])) / 255,
-      Math.min(255, parseFloat(m[2])) / 255,
-      m.length >= 4 ? Math.min(1, parseFloat(m[3])) : 1,
+      Math.min(255, r) / 255,
+      Math.min(255, g) / 255,
+      Math.min(255, b) / 255,
+      Math.min(1, a),
     ]
   }
   return fb
@@ -219,6 +223,24 @@ function clampN(v: number, lo: number, hi: number): number {
 type Clouds = { softness?: number; shadow?: number; cirrus?: number }
 type Sun = { x?: number; y?: number; glow?: string }
 type Pointer = { parallax?: number; wind?: number; damping?: number }
+
+interface SkyVariables {
+  zenith: string
+  horizon: string
+  cloud: string
+  glow: string
+  coverage: number
+  speed: number
+  size: number
+  softness: number
+  shadow: number
+  cirrus: number
+  sunX: number
+  sunY: number
+  parallax: number
+  wind: number
+  damping: number
+}
 
 const CLOUD_DEFAULTS: Required<Clouds> = { softness: 100, shadow: 100, cirrus: 45 }
 const SUN_DEFAULTS: Required<Sun> = { x: 78, y: 92, glow: "rgba(232, 243, 255, 0.9)" }
@@ -263,7 +285,23 @@ function CloudSkyBase(props: CloudSkyProps) {
   const sizeRef = useRef({ w: 0, h: 0 })
   sizeRef.current = { w: num(width, 0), h: num(height, 0) }
 
-  const vRef = useRef<Record<string, number | string>>({})
+  const vRef = useRef<SkyVariables>({
+    zenith: background,
+    horizon: baseColor,
+    cloud: accentColor,
+    glow: sun_.glow,
+    coverage: clampN(num(density, 55), 0, 100) / 100,
+    speed: clampN(num(speed, 50), 0, 100) / 50,
+    size: clampN(num(size, 100), 20, 300) / 100,
+    softness: 4.5 / Math.max(0.15, clampN(num(clouds_.softness, 100), 20, 300) / 100),
+    shadow: clampN(num(clouds_.shadow, 100), 0, 200) / 100,
+    cirrus: clampN(num(clouds_.cirrus, 45), 0, 100) / 100,
+    sunX: clampN(num(sun_.x, 78), 0, 100) / 100,
+    sunY: clampN(num(sun_.y, 92), 0, 100) / 100,
+    parallax: clampN(num(pointer_.parallax, 100), 0, 300) / 100,
+    wind: clampN(num(pointer_.wind, 100), 0, 300) / 100,
+    damping: clampN(num(pointer_.damping, 20), 1, 100),
+  })
   vRef.current = {
     zenith: background,
     horizon: baseColor,
@@ -315,9 +353,12 @@ function CloudSkyBase(props: CloudSkyProps) {
     gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0)
 
     const locs: Record<string, WebGLUniformLocation | null> = {}
-    const u = (name: string) => {
-      if (!(name in locs)) locs[name] = gl.getUniformLocation(prog, name)
-      return locs[name]
+    const u = (name: string): WebGLUniformLocation | null => {
+      const existing = locs[name]
+      if (existing !== undefined) return existing
+      const loc = gl.getUniformLocation(prog, name)
+      locs[name] = loc
+      return loc
     }
 
     let raf = 0
@@ -335,12 +376,12 @@ function CloudSkyBase(props: CloudSkyProps) {
       const v = vRef.current
       const p = ptrRef.current
 
-      const k = 1 - Math.exp(-(v.damping as number) * 0.12 * dt)
+      const k = 1 - Math.exp(-v.damping * 0.12 * dt)
       leanX += ((p.inside ? p.x : 0) - leanX) * k
       leanY += ((p.inside ? p.y : 0) - leanY) * k
 
-      const gust = 1 + leanX * (v.wind as number)
-      const rate = (v.speed as number) * gust
+      const gust = 1 + leanX * v.wind
+      const rate = v.speed * gust
       nearX = (nearX - NEAR_DRIFT * rate * dt) % 1000
       farX = (farX - FAR_DRIFT * rate * dt) % 1000
       cirrusX = (cirrusX - CIRRUS_DRIFT * rate * dt) % 1000
@@ -356,22 +397,22 @@ function CloudSkyBase(props: CloudSkyProps) {
       }
       gl.viewport(0, 0, bw, bh)
 
-      const zen = parseColor(v.zenith as string, [0.369, 0.576, 0.824, 1])
-      const hor = parseColor(v.horizon as string, [0.706, 0.824, 0.941, 1])
-      const cld = parseColor(v.cloud as string, [1, 1, 1, 1])
-      const glow = parseColor(v.glow as string, [0.91, 0.953, 1, 0.9])
+      const zen = parseColor(v.zenith, [0.369, 0.576, 0.824, 1])
+      const hor = parseColor(v.horizon, [0.706, 0.824, 0.941, 1])
+      const cld = parseColor(v.cloud, [1, 1, 1, 1])
+      const glow = parseColor(v.glow, [0.91, 0.953, 1, 0.9])
 
       gl.uniform2f(u("uRes"), bw, bh)
       gl.uniform1f(u("uNearX"), nearX)
       gl.uniform1f(u("uFarX"), farX)
       gl.uniform1f(u("uCirrusX"), cirrusX)
-      gl.uniform1f(u("uCoverage"), v.coverage as number)
-      gl.uniform1f(u("uSize"), v.size as number)
-      gl.uniform1f(u("uSoftness"), v.softness as number)
-      gl.uniform1f(u("uShadow"), v.shadow as number)
-      gl.uniform1f(u("uCirrus"), v.cirrus as number)
-      gl.uniform2f(u("uSun"), v.sunX as number, v.sunY as number)
-      gl.uniform2f(u("uParallax"), -leanX * (v.parallax as number) * 0.07, -leanY * (v.parallax as number) * 0.05)
+      gl.uniform1f(u("uCoverage"), v.coverage)
+      gl.uniform1f(u("uSize"), v.size)
+      gl.uniform1f(u("uSoftness"), v.softness)
+      gl.uniform1f(u("uShadow"), v.shadow)
+      gl.uniform1f(u("uCirrus"), v.cirrus)
+      gl.uniform2f(u("uSun"), v.sunX, v.sunY)
+      gl.uniform2f(u("uParallax"), -leanX * v.parallax * 0.07, -leanY * v.parallax * 0.05)
       gl.uniform3f(u("uZenith"), zen[0], zen[1], zen[2])
       gl.uniform3f(u("uHorizon"), hor[0], hor[1], hor[2])
       gl.uniform3f(u("uCloud"), cld[0], cld[1], cld[2])
