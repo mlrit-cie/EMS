@@ -1,0 +1,8 @@
+<<<<<<< HEAD
+{}
+=======
+{
+  "css.validate": false,
+  "css.lint.unknownAtRules": "ignore"
+}
+>>>>>>> 647de86 (Initial commit on FINAL-EMS-UI)

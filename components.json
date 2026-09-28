@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+<<<<<<< HEAD
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+=======
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "css": "src/styles.css",
+    "baseColor": "slate",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "rtl": false,
+>>>>>>> 647de86 (Initial commit on FINAL-EMS-UI)
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+<<<<<<< HEAD
+  "iconLibrary": "lucide",
+  "registries": {
+    "@reui": "https://reui.io/r/{style}/{name}.json"
+  }
+=======
+  "registries": {}
+>>>>>>> 647de86 (Initial commit on FINAL-EMS-UI)
+}
