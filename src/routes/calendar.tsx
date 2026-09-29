@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, Clock3, Filter, MapPin, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { SiteFooter } from '@/components/site-shell';
@@ -136,11 +136,11 @@ function CalendarPage() {
                 today: "bg-[#eef2ff] text-slate-900",
               }}
               components={{
-                DayContent: ({ date }) => {
-                  const hasEvents = filteredEvents.some((event) => matchesEvent(event, date));
+                Day: ({ day, modifiers, ...dayProps }: import("react-day-picker").DayProps) => {
+                  const hasEvents = filteredEvents.some((event) => matchesEvent(event, day.date));
                   return (
-                    <div className="relative flex h-full w-full items-center justify-center">
-                      <span>{date.getDate()}</span>
+                    <div className="relative flex h-full w-full items-center justify-center" {...(dayProps as React.HTMLAttributes<HTMLDivElement>)}>
+                      <span>{day.date.getDate()}</span>
                       {hasEvents && (
                         <span className="absolute bottom-1.5 h-1.5 w-1.5 rounded-[2px] bg-[#ff6a3d]" />
                       )}

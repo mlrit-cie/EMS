@@ -5,7 +5,7 @@ interface ScrollCardProps {
   delay?: number;
   className?: string;
   style?: CSSProperties;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
 }
 
 /**
